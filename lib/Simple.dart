@@ -1,103 +1,91 @@
-import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
-class Simple extends StatefulWidget {
-  @override
-  _State createState() => _State();
-}
+import 'package:flutter/material.dart';
 
-class _State extends State<Simple> {
-  int LeftButton = 1;
-  int RightButton = 1;
-  int countleft = 0;
-  int countright = 0;
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.blue,
-        appBar: AppBar(
-          title: Text('Simple'),
-          backgroundColor: Colors.blue,
-        ),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                      //flex: 2,
-                      child: RaisedButton(
-                    onPressed: () {
-                      if (countleft > countright) {
-                        Alert(
-                          context: context,
-                          title: 'Winer',
-                          desc: 'Left Dice is Winer',
-                        ).show();
-                      } else if (countright > countleft) {
-                        Alert(
-                          context: context,
-                          title: 'Winer',
-                          desc: 'Right Dice is Winer',
-                        ).show();
-                      } else {
-                        Alert(
-                          context: context,
-                          title: 'Winer',
-                          desc: 'Both Dice are Same',
-                        ).show();
-                      }
-                      countleft = 0;
-                      countright = 0;
-                    },
-                    child: Text(
-                      'Winer',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    //flex: 2,
-                    child: FlatButton(
-                        onPressed: () {
-                          setState(() {
-                            RandNum();
-                          });
-                        },
-                        child: Image.asset('images/dice$LeftButton.png')),
-                  ),
-                  Expanded(
-                    //flex: 1,
-                    child: FlatButton(
-                        onPressed: () {
-                          setState(() {
-                            RandNum();
-                          });
-                        },
-                        child: Image.asset('images/dice$RightButton.png')),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+    return Scaffold(
+      body: SimpleDice(),
     );
   }
+}
 
-  void RandNum() {
-    LeftButton = Random().nextInt(6) + 1;
-    RightButton = Random().nextInt(6) + 1;
-    countleft = countleft + LeftButton;
-    countright = countright + RightButton;
+class SimpleDice extends StatefulWidget {
+  @override
+  _SimpleDiceState createState() => _SimpleDiceState();
+}
+
+class _SimpleDiceState extends State<SimpleDice> {
+  var imageArray = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg', '5.jpeg', '6.jpeg'];
+  //var random = new Random();
+  int randomIntForDiceOne = Random().nextInt(6);
+  int randomIntForDiceTwo = Random().nextInt(6);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white60,
+        appBar: AppBar(
+          title: Text('Dice Rolling App'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(21, 50, 21, 50),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 60),
+                child: Text(
+                  'The sum is: ' +
+                      (randomIntForDiceOne + randomIntForDiceTwo + 2)
+                          .toString(),
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/' + imageArray[randomIntForDiceOne],
+                    height: 150,
+                    width: 150,
+                  ),
+                  Image.asset(
+                    'assets/' + imageArray[randomIntForDiceTwo],
+                    height: 150,
+                    width: 150,
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 60),
+                child: RaisedButton(
+                  onPressed: changeImage,
+                  child: Text('Roll Dice'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 60),
+                child: RaisedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Exit'),
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
+  void changeImage() {
+    setState(() {
+      randomIntForDiceOne = Random().nextInt(6);
+      randomIntForDiceTwo = Random().nextInt(6);
+    });
   }
 }

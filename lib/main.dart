@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fa17_bse_023_sessional2/Navigation.dart';
 
 void main() {
-  runApp(Home());
+  runApp(SplashScreen());
 }
 
 class Home extends StatelessWidget {
@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
     return MaterialApp(
       title: 'Dice App',
       home: HomePage(),
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(primarySwatch: Colors.red),
     );
   }
 }
