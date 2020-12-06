@@ -1,4 +1,4 @@
-import 'fa17_bse_023_sessional2/main.dart';
+import 'package:fa17_bse_023_sessional2/main.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
 
